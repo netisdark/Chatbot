@@ -10,8 +10,9 @@
             padding:0;
         }
         #body{
-            display:flex;
-            flex-direction:column;
+          
+            height:90vh;
+            overflow:scroll;
         }
         #body div{
             width:100%;
@@ -24,12 +25,12 @@
         }
         #inputs{
             display:flex;
-            position: absolute;
+            position: fixed;
             bottom:10px;
             width:95%;
         }
         #me{
-            background:rgba(0,0,0,0.1);
+            background:#0000FF10;
         }
         nav input{
             margin:0 2%;
@@ -57,10 +58,11 @@ function send() {
     const input=document.getElementById("input");
     
     const div=document.createElement("div");
-    div.setAttribute("id","me");
+   
     div.innerHTML=input.value;
     document.getElementById("body").appendChild(div);
-   const result=document.createElement("div"); fetch("https://api.popcat.xyz/chatbot?msg="+input)
+   const result=document.createElement("div");
+   result.setAttribute("id","me"); fetch("https://api.popcat.xyz/chatbot?msg="+input)
         .then(response => response.json())
         .then(data => {
             const message = data.response;
