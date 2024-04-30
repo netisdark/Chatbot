@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #body{
+            display:flex;
+            flex-direction:column;
+        }
+        #body div{
+            width:100%;
+            height:50px;
+            font-size:25px;
+            border:1px solid black;
+            display:flex;
+            align-items:center;
+            padding-left:10px;
+        }
+        #inputs{
+            display:flex;
+            position: absolute;
+            bottom:10px;
+            width:95%;
+        }
+        #me{
+            background:rgba(0,0,0,0.1);
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  
+</head>
+<body>
+    <div id="body">
+        
+    </div>
+    <nav id='inputs'>
+        <input class="form-control form-control-lg" id="input" type="text" placeholder="Enter message..." aria-label=".form-control-lg example">
+        <button type="button" class="btn btn-outline-primary" onclick="send()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="#000"/>
+</svg></button>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+    <script>
+      
+function send() {
+    
+    const input=document.getElementById("input").value;
+    const div=document.createElement("div");
+    div.setAttribute("id","me");
+    div.innerHTML=input;
+    document.getElementById("body").appendChild(div);
+   const result=document.createElement("div"); fetch("https://api.popcat.xyz/chatbot?msg="+input)
+        .then(response => response.json())
+        .then(data => {
+            const message = data.response;
+           
+            result.textContent = message;
+            
+        })
+        .catch(error => {
+            console.error('Error fetching', error);
+            result.textContent = 'Unable to get the results';
+        });
+        document.getElementById("body").appendChild(result);
+}
+
+    </script>
+</body>
+</html>
